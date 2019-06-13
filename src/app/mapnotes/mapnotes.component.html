@@ -1,0 +1,155 @@
+<app-header></app-header> 
+
+<!-- floating button-->
+<button [disabled]="! add_note_btn" #content data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-ada btn-float">
+  <i class="fas fa-plus"></i>
+</button>
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-3 notebar text-center text-light">
+
+          <h6 style="border-bottom:1px solid #ccc; padding:8px;" class="text-primary">Weather Forecast</h6>
+          <p >{{locationName}}</p>
+          <h4 >{{currentWeather[0]?.WeatherText}}</h4>
+          <div *ngIf="currentWeather">
+              <img *ngIf="currentWeather[0]?.WeatherIcon < 10" src="https://developer.accuweather.com/sites/default/files/0{{currentWeather[0]?.WeatherIcon}}-s.png">
+              <img *ngIf="currentWeather[0]?.WeatherIcon > 9" src="https://developer.accuweather.com/sites/default/files/{{currentWeather[0]?.WeatherIcon}}-s.png">
+
+          </div>
+         
+          <h1 >
+              {{currentWeather[0]?.Temperature.Metric.Value}} {{currentWeather[0].Temperature.Metric.Unit}}
+            </h1>
+            <p>UV INDEX: {{currentWeather[0]?.UVIndexText}}</p>
+            <p class="uvindex">
+                Wind Speed: {{currentWeather[0]?.Wind.Direction.English}} {{currentWeather[0]?.Wind.Speed.Metric.Value}}
+                {{currentWeather[0]?.Wind.Speed.Metric.Unit}}
+              </p><hr>
+              <h5>5 Days Forecast</h5>
+
+                <div class="card text-white bg-light mb-3" style="max-width: 18rem;" *ngFor="let foreCast of foreCasts">
+                    <div class="card-header" class="text-center">{{ foreCast.Date | date: 'EEEE' }}</div>
+                    <div class="card-body">
+                      <h5 class="card-title" class="text-center">
+                          <img *ngIf="foreCast.Day.Icon < 10"  src="https://developer.accuweather.com/sites/default/files/0{{foreCast.Day.Icon}}-s.png">
+                          <img *ngIf="foreCast.Day.Icon > 9"  src="https://developer.accuweather.com/sites/default/files/{{foreCast.Day.Icon}}-s.png">
+                      </h5>
+                      <p class="card-text" class="text-center">{{foreCast.Temperature.Minimum.Value}} {{foreCast.Temperature.Minimum.Unit}}
+                          {{foreCast.Temperature.Maximum.Value}} {{foreCast.Temperature.Maximum.Unit}}</p>
+                    </div>
+                  </div>
+
+      </div>
+    <div class="col-md-6 map">
+      <div #map id="map"></div>
+
+      <button *ngIf="! done_btn" (click)="editmap()" class="btn btn-link " style="z-index: 1000; color: #ffffff; position: absolute; right: 20px; top: 20px;"><i class="far fa-edit"></i> Edit map</button>
+      <button *ngIf="done_btn" (click)="donemap()" class="btn btn-link" style="z-index: 1000 ; color: #ffffff; position: absolute; right: 20px; top: 20px;"><i class="fas fa-check-circle"></i> Done</button>
+
+    </div>
+    <div class="col-md-3 notebar">
+      <h6 style="border-bottom:1px solid #ccc; padding:8px; width: 120px;" class="text-primary">Notes</h6>
+      
+      <br>
+ 
+      <!-- Secondary Color -->
+      <p style="font-size:13px;" class="float-left text-secondary">Change Marker Status:</p>
+      <label class="switch float-right">
+        
+        <input type="checkbox" [checked]="mark_stat.mark_status=='green'" value="green" [(ngModel)]="marker_status" (change)="marker_status_change()">
+        <span class="slider round"></span>
+      </label>
+
+      <br><br>
+
+      <!-- display notes -->
+
+          <div class="note" *ngFor="let notee of allNotes">
+            <h6 class="text-light" *ngIf="notee.note_user_id == '0'"><strong> Admin </strong></h6>
+            <button *ngIf="notee.note_user_id == '0'" style="margin-top: -30px;" (click)="deleteNote(notee.note_id)"  name="delete" class="btn btn-link text-danger float-right">
+              <i class="fas fa-trash"></i>
+            </button>
+            <hr>
+              <a target="_blank" [href]="notee.note_img"><img *ngIf="notee.note_img != 'undefined'" [src]="notee.note_img" class="img-fluid "/></a>
+              <p class="text-light" *ngIf="notee.note_txt != 'undefined'">{{ notee.note_txt }}</p>
+          </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--modal add note -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-titlee text-center" id="exampleModalCenterTitle">Add Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-center">
+            
+          <div class="form-group">
+            <textarea rows="4" [(ngModel)]="note" class="form-control" placeholder="Write your note..."></textarea>
+          </div>
+          
+          <br />
+          <div class="text-center">
+              <input type="file" (change)="handleInputChange($event)" name="imageUrl" accept="image/*" #file style="display: none;"> 
+              <button style="color: #ffffff;" (click)="file.click()" class="btn btn-outline-primary btn-block btn-lg" type="button"><i class="fas fa-upload"></i> Upload Image</button>
+              <br />
+              <p class="text-center">Preview</p>
+              <img [src]="imageSrc" class=" img-thumbnail" style="max-width:100px;max-height:100px"/>
+              <hr />
+              <br /> 
+              <button (click)="addNote()" class="btn btn-ada btn-lg" type="button"><i class="fas fa-plus"></i> Add</button>
+              
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--modal display all users -->
+<div class="modal fade" id="exampleModalCenterallusers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterallusersTitle" data-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-titlee text-center text-secondary" id="exampleModalCenterallusersTitle">Choose User</h5>
+        
+      </div>
+      <div class="modal-body">
+        <!-- store marker id into the hidden field -->
+        <input type="hidden" id="hd_marker_id" value="">
+        <ul class="list-group" >
+          <li style="cursor: pointer;" (click)="DisplayMap(user.id)" *ngFor="let user of all_users" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ user.fname }}
+            <span class="badge badge-primary badge-pill">1</span>
+          </li>
+          
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Spinner -->
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  fullScreen="true"
+  type="ball-scale-multiple">
+ <p style="font-size: 20px; color: white">Loading... Please wait...</p>
+</ngx-spinner>

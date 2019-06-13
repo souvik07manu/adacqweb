@@ -1,0 +1,101 @@
+<app-header></app-header>
+
+<!-- floating button-->
+<button (click)="add_maps_modal_open()" class="btn btn-ada btn-float">
+  <i class="fas fa-plus"></i>
+</button>
+
+
+<!--souvik-addmaps-part-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12"><h4 class="card-title">Geo Data</h4></div>
+
+      <div *ngFor="let mapp of all_maps" class="col-md-4">
+        <div  class="card bg-light text-white" >
+          <img  [src]="mapp.m_image_url" class="card-img-top img-fluid" alt="..." height="250" width="250">
+          
+          <div class="card-body">
+            <h5 class="card-title">Title: {{mapp.m_title}}</h5><hr>
+            <h6 >Field: {{mapp.f_title}}</h6>
+
+            <hr>
+            <p><strong>North: </strong>{{mapp.m_north}}</p>
+            <p><strong>South: </strong>{{mapp.m_south}}</p>
+            <p><strong>East: </strong>{{mapp.m_east}}</p>
+            <p><strong>West: </strong>{{mapp.m_west}}</p>
+            <button (click)="deleteMapData(mapp.m_id)"  name="delete" class="btn btn-link text-danger float-right">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Modal for add maps -->
+<div class="modal fade" id="add_maps_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-titlee text-center" id="exampleModalCenterTitle">Add GEO tiff and KML</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="text-center">
+
+          <input type="textbox" [(ngModel)]="map_title" class="form-control" placeholder="Title">&nbsp;
+
+            <div class="form-group">
+              <select [(ngModel)]="field_name" class="form-control" placeholder="Select">
+                <option value="0">Select Field...</option>
+                <option *ngFor="let field of all_fields" [value]="field.f_id">{{field.f_title}}</option>
+              </select>
+            </div>
+
+            <input type="file" (change)="handleInputChange($event)" name="imageUrl" accept="image/*" #filee style="display: none;"> 
+            <button (click)="filee.click()" class="btn btn-outline-dark btn-block btn-lg" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload Geo-tiff Image</button>
+
+            <br />
+            
+                <input type="file" id="kml_pop" [(ngModel)]="kml_ng" (change)="upload_kml($event)" name="kmlUrl" #filekml style="display: none;"> 
+                <button (click)="openKmlFile()" class="btn btn-outline-info btn-block btn-lg" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload KML</button>
+                
+
+            <br />
+
+            <!--<p *ngIf="imageSrc" class="text-center">Preview</p>-->
+            <!--<img *ngIf="imageSrc" [src]="imageSrc" class=" img-thumbnail" style="max-width:100px;max-height:100px"/>-->
+
+            <hr />
+            <br /> 
+            <button (click)="addMaps()" class="btn btn-ada btn-lg" type="button"> Add</button>
+            
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spinner -->
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+fullScreen="true"
+type="ball-scale-multiple">
+<p style="font-size: 20px; color: white">Loading... Please wait...</p>
+</ngx-spinner>

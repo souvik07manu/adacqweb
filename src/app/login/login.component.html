@@ -1,0 +1,50 @@
+<div class="container-fluid cover">
+  <div class="row">
+    <div class="col-md-12">
+        <button #content style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Launch demo modal
+          </button>
+          
+    </div>
+  </div>
+</div>
+
+<!--modal login -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-titlee text-center" id="exampleModalCenterTitle"><i class="fas fa-user-lock"></i> Login Now</h5>
+        </div>
+        <div class="modal-body text-center">
+          <img style="width: 250px;" src="assets//logo.png" class="">
+          <br><br>
+          <div class="form-group">
+            <input type="email" [(ngModel)]="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" [(ngModel)]="password" class="form-control" placeholder="Password">
+          </div>
+          <br />
+          <div class="text-center">
+              <button (click)="login()" class="btn btn-ada btn-lg" type="button"><i class="fas fa-lock"></i> Login</button>
+              <br /> <br />
+             <!--  <button type="button" class="btn btn-link"> <i class="fas fa-key"></i> Forgot your password? </button>-->
+              <br />
+             <!-- <button type="button" class="btn btn-link"><i class="fas fa-user-plus"></i> Create new account </button> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spinner -->
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  fullScreen="true"
+  type="ball-scale-multiple">
+ <p style="font-size: 20px; color: white">Loging in...</p>
+</ngx-spinner>

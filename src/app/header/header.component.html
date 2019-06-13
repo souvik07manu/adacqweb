@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+  <a class="navbar-brand" href="#"><img style="width: 200px;" src="assets/logo.png" class=""></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="active" ><i class="fas fa-tachometer-alt"></i>
+               Dashboard</a>
+          </li>
+      
+      <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/fields']" routerLinkActive="active" ><i class="far fa-map"></i> Add Fields</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/addmaps']" routerLinkActive="active" ><i class="fas fa-map-marked-alt"></i> Add Geo Data</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/comparison']" routerLinkActive="active" ><i class="fas fa-balance-scale"></i> Comparison</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="" routerLinkActive="" ><i class="fas fa-plane"></i> Preflight Checklist</a>
+        </li>
+
+        
+
+        <li class="nav-item">
+            <a class="nav-link " [routerLink]="['/']" routerLinkActive=""  >Logout</a>
+          </li>
+      
+
+
+      
+    </ul>
+    <div class="mt-2 mt-md-0">
+            <button (click)="changeUser()" class="btn btn-link text-dark" type="button" aria-haspopup="true" aria-expanded="false">
+                <i class="far fa-user"></i> Change user <i class="fas fa-level-down-alt"></i>
+            </button> 
+            &nbsp; &nbsp;
+          
+     
+
+    </div>
+  </div>
+</nav>
+
+<div style="margin-top: 80px;"></div>

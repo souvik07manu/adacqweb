@@ -1,0 +1,193 @@
+<app-header></app-header>
+<style>
+.fas {
+  margin-right: 10px;
+}
+
+.far {
+  margin-right: 10px;
+}
+</style>
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h4 class="card-title float-left">Dashboard</h4>
+        <button (click)="addClientBtn()" class="btn btn-ada float-right"><i class="fas fa-plus"></i> Add Client</button>
+      </div>
+
+      
+      
+      <div class="col-md-3">
+          <div class="card text-white bg-primary mb-3 mr-3" style="max-width: 15rem;">
+              <div class="card-header">All Clients</div>
+              <div class="card-body">
+                <h5 class="card-title">Total: {{total_number_clients}} </h5>
+                <!-- <button class="btn btn-block btn-secondary">View All Clients</button> -->
+              </div>
+            </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3 mr-3" style="max-width: 15rem;">
+            <div class="card-header">All Fields</div>
+            <div class="card-body">
+              <h5 class="card-title">Total: {{total_number_fields}}</h5>
+              <!-- <button class="btn btn-block btn-secondary">View All Fields</button> -->
+            </div>
+          </div>
+      </div>
+
+      <div class="col-md-3">
+          <div class="card text-white bg-success mb-3 mr-3" style="max-width: 15rem;">
+              <div class="card-header">All Geo Data</div>
+              <div class="card-body">
+                <h5 class="card-title">Total: {{total_number_geodata}}</h5>
+                <!-- <button class="btn btn-block btn-secondary">View All Geo Data</button> -->
+              </div>
+            </div>
+      </div>
+          
+      <div class="col-md-3">
+          <div class="card text-white bg-info mb-3 mr-3" style="max-width: 15rem;">
+              <div class="card-header">All Notes</div>
+              <div class="card-body">
+                <h5 class="card-title">Total: {{total_number_notes}}</h5>
+                <!-- <button class="btn btn-block btn-secondary">View All Notes</button> -->
+              </div>
+          </div>
+      </div>
+            
+
+
+              <!--all clients table-->
+              
+              <div style="margin-top: 30px;" class="col-md-12"><h5 class="">Recent Clients</h5></div>
+              <table id="myTable" class="table table-light table-bordered ">
+                  <thead>
+                    <tr>
+                      
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Username</th>
+                      
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="" *ngFor="let client of all_clients ">
+                      
+                      <td>{{client.c_name}}</td>
+                      <td>{{client.c_email}}</td>
+                      <td>{{client.c_username}}</td>
+                      
+                      <td *ngIf="client.c_status == 0"><span class="badge badge-success">Active</span></td>
+                      <td *ngIf="client.c_status == 1"><span class="badge badge-danger">Inactive</span></td>
+                      <td><button class="btn btn-sm btn-secondary" (click)="viewFields()">View Fields</button>&nbsp;
+                          <button class="btn btn-sm btn-primary" (click)="viewGeoData()">View All Geo Data</button>&nbsp;
+                          <button class="btn btn-sm btn-info" (click)="editClientMod(client.c_username)">Edit</button>&nbsp;
+                          <button class="btn btn-sm btn-danger" (click)="deleteClient(client.c_username)">Delete</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div id="contextMenu" class=" clearfix">
+                  <ul class="dropdown-menu dropdown-context" role="menu" style="display:block;position:static;margin-bottom:5px;">
+                    <li><a tabindex="-1" href="#"><i class="far fa-map"></i> View Fields</a></li>
+                    <li><a tabindex="-1" href="#"><i class="fas fa-map-marked-alt"></i> View Geo Data</a></li>
+                    <li class="divider"></li>
+                    <li><a (click)="editClientMod()" tabindex="-1" href="javascript:void(0)"><i class="fas fa-pen"></i> Edit</a></li>
+                    <li><a (click)="deleteClient()" tabindex="-1" href="javascript:void(0)"><i class="fas fa-trash-alt"></i> Delete</a></li>
+                  </ul>
+                  <input type="hidden" id="hd_client_em">
+                </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Modal for add clients -->
+<div class="modal fade" id="add_cilent_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-titlee text-center" id="exampleModalCenterTitle">Add Client</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="text-center">Create a new client account</p>
+            <div class="form-group">
+                <input type="text" [(ngModel)]="name" class="form-control" placeholder="Name" />
+              </div>
+          <div class="form-group">
+            <input type="email" [(ngModel)]="email" class="form-control" placeholder="Email" />
+          </div>
+          <div class="form-group">
+              <input type="password" [(ngModel)]="password" class="form-control" placeholder="Password" />
+          </div>
+
+          <button (click)="addClient()" class="btn btn-ada text-center"> Submit</button>
+
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal for edit clients -->
+<div class="modal fade" id="edit_cilent_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-titlee text-center" id="exampleModalCenterTitle">Edit Client</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-center">Edit client account</p>
+          <div class="form-group">
+              <input type="text" [(ngModel)]="edit_name" class="form-control" placeholder="Name" />
+            </div>
+        <div class="form-group">
+          <input type="email" [(ngModel)]="edit_email" class="form-control" placeholder="Email" />
+        </div>
+        <div class="form-group">
+            <input type="password" [(ngModel)]="edit_password" class="form-control" placeholder="Password" />
+        </div>
+
+        <div class="form-group">
+          <select [(ngModel)]="edit_status" class="form-control">
+            <option [selected]="c_status==0" value="0">Active</option>
+            <option [selected]="c_status==1" value="1">Inactive</option>
+          </select>
+        </div>
+
+        <button (click)="updateClient()" class="btn btn-ada text-center"> Update</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spinner -->
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+fullScreen="true"
+type="ball-scale-multiple">
+<p style="font-size: 20px; color: white">Loading... Please wait...</p>
+</ngx-spinner>
+
+
+

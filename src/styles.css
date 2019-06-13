@@ -1,1 +1,231 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*
+Myriad Pro Bold
+
+font-family: myriad-pro, sans-serif;
+
+font-weight: 700;
+
+font-style: normal;
+
+
+Myriad Pro Bold Condensed
+
+font-family: myriad-pro-condensed, sans-serif;
+
+font-weight: 700;
+
+font-style: normal;
+
+*/
+
+
+body {
+    background: #000000;
+    font-family: pt-sans, sans-serif !important;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family: myriad-pro, sans-serif !important;
+}
+
+nav {
+  height: 60px !important;
+}
+
+.dropdown-context {
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 0px 10px 1px #222;
+  border-radius: 10px;
+}
+
+
+.dropdown-context li {
+margin-bottom: 8px;
+}
+
+
+.dropdown-context li a {
+  color: #222222;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.divider{
+
+}
+
+.card-title{
+  font-size: 40px;
+}
+
+.modal-open {
+    overflow: auto;
+}
+
+input,select,textarea {
+  background: #222222 !important;
+  color: #ffffff !important;
+}
+
+.btn-float {
+    position: fixed;
+    background: #F09541 !important;
+    top: 100px;
+    right: 40px;
+    border-radius: 50px;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    box-shadow: 0px 1px 11px 0px #888;
+    z-index: 1000;
+}
+
+input, button {
+    
+}
+.btn-ada {
+    background: #F09541;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    min-width: 200px;
+}
+
+.btn-dark {
+    background: #000000;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    min-width: 200px;
+    border-radius: 40px !important;
+}
+
+.btn-ada:hover {
+    background: rgb(236, 140, 50);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    min-width: 200px;
+}
+
+.btn-link {
+    font-size: 14px;
+}
+
+.modal-titlee {
+    font-size: 16px;
+    margin: 0;
+}
+
+.modal-header {
+    background: #222222;
+    
+}
+
+.modal-body{
+  background: #000000;
+}
+
+.card {
+    /*border-radius: 20px !important;*/
+  /*  box-shadow: 0px 0px 6px 5px #222;  */
+}
+
+.card img {
+    /*border-radius: 20px 20px 0px 0px !important;*/
+}
+
+.modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 2px #444;
+}
+
+.adacqToast {
+    background: red;
+}
+
+.logo {
+    margin-bottom: 20px;
+    width: 300px !important;
+}
+
+.text-secondary {
+    color: #F09541 !important;
+    font-weight: 700;
+}
+
+.note {
+    background: #E8E8E8;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/*
+checkbox switch css
+*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2ed573;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2ed573;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

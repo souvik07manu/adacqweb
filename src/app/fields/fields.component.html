@@ -1,0 +1,77 @@
+<app-header></app-header>
+
+<!-- floating button-->
+<button (click)="add_field_modal_open()" class="btn btn-ada btn-float">
+  <i class="fas fa-plus"></i>
+</button>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12"><h4 class="card-title">Fields</h4></div>
+      <div *ngFor="let field of all_fields" class="col-md-4">
+        <div  class="card bg-light text-white" >
+          <img src="{{field.f_img}}" class="card-img-top" alt="...">
+          
+          <div class="card-body">
+            <h5 class="card-title">{{field.f_title}}</h5>
+            <p class="card-text">{{field.f_content}}</p>
+            <a [routerLink]="['/notes/', field.f_id]" routerLinkActive="router-link-active" class="btn btn-ada">View Notes <i class="fas fa-angle-right"></i></a>
+            <button (click)="deleteFieldData(field.f_id)"  name="delete" class="btn btn-link text-danger float-right">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    
+  </div>
+</div>
+
+
+
+<!-- Modal for add fields -->
+<div class="modal fade" id="add_field_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-titlee text-center" id="exampleModalCenterTitle">Add Field</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body text-center">
+          
+        <div class="form-group">
+          <input type="text" [(ngModel)]="f_title" class="form-control" placeholder="Field title" />
+        </div>
+        <div class="form-group">
+          <textarea rows="3" [(ngModel)]="f_content" class="form-control" placeholder="Field description"></textarea>
+        </div>
+        
+        <br />
+        <div class="text-center">
+            <input type="file" (change)="handleInputChange($event)" name="imageUrl" accept="image/*" #file style="display: none;"> 
+            <button (click)="file.click()" class="btn btn-outline-info btn-block btn-lg" type="button"><i class="fas fa-upload"></i> Upload Image</button>
+            <br />
+            <p *ngIf="imageSrc" class="text-center">Preview</p>
+            <img *ngIf="imageSrc" [src]="imageSrc" class=" img-thumbnail" style="max-width:100px;max-height:100px"/>
+            <hr />
+            <br /> 
+            <button (click)="addField()" class="btn btn-ada btn-lg" type="button"> Add</button>
+            
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spinner -->
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+fullScreen="true"
+type="ball-scale-multiple">
+<p style="font-size: 20px; color: white">Loading... Please wait...</p>
+</ngx-spinner>
