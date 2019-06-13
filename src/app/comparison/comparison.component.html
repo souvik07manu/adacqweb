@@ -1,23 +1,24 @@
 <app-header></app-header>
 
 <div class="container-fluid">
-  <div class="row">
-      <div class="col-md-12"><h4 class="card-title">Fields</h4></div>
-        <div class="col-md-6">
+  <div class="row" >
+      <div class="col-md-12"><h4 class="card-title">Comparison</h4></div>
+      
+        <div class="col-md-6 ">
+          <p>{{mapTitle}}</p>
           <div #map id="map"></div>
         </div>
-        <div class="nabin"></div>
+      
 
-        <div class="col-md-6">
-          <div #map_sec id="map_sec"></div>
-        </div>
+
+      
+          <div class="col-md-6 ">
+              <p>{{mapTitle_sec}}</p>
+            <div #map_sec id="map_sec"></div>
+          </div>
 
     
   </div>
-</div>
-
-<div class="text-center">
-  <button class="btn btn-primary btn-sx" (click)="add_comparison_modal_open()" type="button">Choose Fields</button>
 </div>
 
 
@@ -36,8 +37,10 @@
         <div class="custom-control custom-checkbox">
             
           <!-- <input type="checkbox" [(ngModel)]="comField.checked" [value]="comField.f_id" id="customCheck" name="example1">{{comField.f_title}} -->
-             
-          <input type="checkbox" value="{{comField.f_id}}" name="{{comField.f_id}}" (change) ="updateSelectedTimeslots($event)" />{{comField.f_title}}
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{comField.f_id}}" name="{{comField.f_id}}" (change) ="updateSelectedTimeslots($event)" />
+            <label class="form-check-label" for="defaultCheck1">{{comField.f_title}}</label>
+          </div>
         </div>
       </div>
 

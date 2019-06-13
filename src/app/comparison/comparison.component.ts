@@ -33,7 +33,9 @@ export class ComparisonComponent implements OnInit {
   d_lat: any;
   d_long: any;
   markerIcon: any;
-  mapid:number;
+  mapid: number;
+  mapTitle: number;
+  mapTitle_sec: number;
 
   constructor(
     private http: Http,
@@ -48,13 +50,13 @@ export class ComparisonComponent implements OnInit {
     this.spinner.show();
     this.getComparisonField();
     //this.startComparisonBtn();
+
+    /////open comparison modal ///
+    $("#add_comparison_modal").modal('show');
     
   }
 
-  ////////open comparison modal ///
-  async add_comparison_modal_open() {
-    await $("#add_comparison_modal").modal('show');
-  }
+ 
 
   async getComparisonField() {
     
@@ -73,23 +75,13 @@ export class ComparisonComponent implements OnInit {
       $("#add_comparison_modal").modal('hide');
       this.spinner.hide();
       console.log(this.checkbox_field_id);
-  // get default map lat and long
-  let checkbox_field_id_arr2str: any ;
-   checkbox_field_id_arr2str = this.checkbox_field_id.toString() ;
-   checkbox_field_id_arr2str = checkbox_field_id_arr2str.split(",");
-
-   this.http.get(this.url + '?action=getmapbounds&f_id='+checkbox_field_id_arr2str[0]).pipe(
-    map( res => res.json())
-  ).subscribe((bounds) => {
-    this.mapid=bounds[0].m_id;
-    this.d_lat = bounds[0].m_north;
-    this.d_long=bounds[0].m_west;
-  // this.getLocationKey(this.d_lat,this.d_long);
-  });
   
 
-   this.DisplayMap(checkbox_field_id_arr2str[0]);
-   this.DisplayMapTwo(checkbox_field_id_arr2str[1]);
+   
+  
+
+   this.DisplayMap();
+   this.DisplayMapTwo();
       this.all_com_fields_but = comFields;
     });
    
@@ -113,9 +105,21 @@ export class ComparisonComponent implements OnInit {
 
 /////////////display map ///////////
 
-async DisplayMap(field_id) {
-  //  store choose user to the local storage
-  //localStorage.setItem('ada_choose_useridkey', userid);
+async DisplayMap() {
+
+  let checkbox_field_id_arr2str: any ;
+   checkbox_field_id_arr2str = this.checkbox_field_id.toString() ;
+   checkbox_field_id_arr2str = checkbox_field_id_arr2str.split(",");
+
+  await this.http.get(this.url + '?action=getmapbounds&f_id='+checkbox_field_id_arr2str[0]).pipe(
+    map( res => res.json())
+  ).subscribe((bounds) => {
+    this.mapid=bounds[0].m_id;
+    this.d_lat = bounds[0].m_north;
+    this.d_long=bounds[0].m_west;
+    this.mapTitle=bounds[0].m_title;
+  // this.getLocationKey(this.d_lat,this.d_long);
+
 
   // Getting current user location from GPS 
     const location = new google.maps.LatLng(this.d_lat,this.d_long);
@@ -128,7 +132,7 @@ async DisplayMap(field_id) {
       disableDefaultUI: true
     };
 
-    const mapp = await new google.maps.Map(this.mapRef.nativeElement,options);
+    const mapp =  new google.maps.Map(this.mapRef.nativeElement,options);
     let marker, i;
     let infowindow = new google.maps.InfoWindow();
 
@@ -141,7 +145,7 @@ async DisplayMap(field_id) {
     
 
     // ground overlay from api//////
-    await this.http.get(this.url + '?action=getmapbounds&f_id='+field_id).pipe(
+     this.http.get(this.url + '?action=getmapbounds&f_id='+checkbox_field_id_arr2str[0]).pipe(
       map( res => res.json())
     ).subscribe((bounds) => {
       
@@ -161,15 +165,27 @@ async DisplayMap(field_id) {
     });
 
   
-    
+  });
 }
 
 
 /////////////display map 2 ////////////
 
-async DisplayMapTwo(field_id) {
-  //  store choose user to the local storage
-  //localStorage.setItem('ada_choose_useridkey', userid);
+async DisplayMapTwo() {
+
+  let checkbox_field_id_arr2str: any ;
+  checkbox_field_id_arr2str = this.checkbox_field_id.toString() ;
+  checkbox_field_id_arr2str = checkbox_field_id_arr2str.split(",");
+
+ await this.http.get(this.url + '?action=getmapbounds&f_id='+checkbox_field_id_arr2str[1]).pipe(
+   map( res => res.json())
+ ).subscribe((boundss) => {
+   this.mapid=boundss[0].m_id;
+   this.d_lat = boundss[0].m_north;
+   this.d_long=boundss[0].m_west;
+   this.mapTitle_sec=boundss[0].m_title;
+ // this.getLocationKey(this.d_lat,this.d_long);
+
 
   // Getting current user location from GPS 
     const location = new google.maps.LatLng(this.d_lat,this.d_long);
@@ -182,7 +198,7 @@ async DisplayMapTwo(field_id) {
       disableDefaultUI: true
     };
 
-    const mapp = await new google.maps.Map(this.map_sec.nativeElement,options);
+    const mapp =  new google.maps.Map(this.map_sec.nativeElement,options);
     let marker, i;
     let infowindow = new google.maps.InfoWindow();
 
@@ -195,7 +211,7 @@ async DisplayMapTwo(field_id) {
     
 
     // ground overlay from api//////
-    await this.http.get(this.url + '?action=getmapbounds&f_id='+field_id).pipe(
+     this.http.get(this.url + '?action=getmapbounds&f_id='+checkbox_field_id_arr2str[1]).pipe(
       map( res => res.json())
     ).subscribe((bounds) => {
       
@@ -215,7 +231,7 @@ async DisplayMapTwo(field_id) {
     });
 
   
-    
+  });
 }
 
 }

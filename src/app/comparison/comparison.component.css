@@ -1,5 +1,6 @@
 #map {
     height: 100vh;
+    
    /*border-radius: 10px; */
     margin-left:-20px;
     margin-right:-20px;
@@ -7,7 +8,25 @@
 
 #map_sec {
     height: 100vh;
+    
    /*border-radius: 10px; */
     margin-left:-20px;
-    margin-right:-20px;
+ margin-right:-20px; 
 }
+
+.services_block {
+    background-color: #000000;
+    border-left:3px solid white;
+    border-right:3px solid white;
+ }
+
+ .padding-pls{
+    border-left: 13px solid rgb(253, 253, 253);
+    border-right: 13px solid rgb(253, 253, 253);
+  }
+  .row .col-md-6:first-child>.padding-pls {
+    border-left: 0px solid white;
+  }
+  .row .col-md-6:last-child>.padding-pls {
+    border-right: 0px solid white;
+  }
